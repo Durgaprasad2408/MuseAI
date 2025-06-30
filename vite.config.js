@@ -1,8 +1,7 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
-import { VitePWA } from 'vite-plugin-pwa'
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
+import { VitePWA } from 'vite-plugin-pwa';
 
-// https://vite.dev/config/
 export default defineConfig({
   plugins: [
     react(),
@@ -10,7 +9,7 @@ export default defineConfig({
       registerType: 'autoUpdate',
       includeAssets: ['favicon.ico', 'apple-touch-icon.png', 'masked-icon.svg'],
       manifest: {
-        name: 'MuseAI - Your Personal Creative Writing Coach',
+        name: 'Muse AI - Your Personal Creative Writing Coach',
         short_name: 'MuseAI',
         description: 'Write smarter, write better, write with AI. MuseAI helps you start, improve, and polish your stories, poems, and essays.',
         theme_color: '#7c3aed',
@@ -79,10 +78,7 @@ export default defineConfig({
               cacheName: 'google-fonts-cache',
               expiration: {
                 maxEntries: 10,
-                maxAgeSeconds: 60 * 60 * 24 * 365 // <== 365 days
-              },
-              cacheKeyWillBeUsed: async ({ request }) => {
-                return `${request.url}?${Date.now()}`
+                maxAgeSeconds: 60 * 60 * 24 * 365 // 365 days
               }
             }
           },
@@ -93,7 +89,7 @@ export default defineConfig({
               cacheName: 'gstatic-fonts-cache',
               expiration: {
                 maxEntries: 10,
-                maxAgeSeconds: 60 * 60 * 24 * 365 // <== 365 days
+                maxAgeSeconds: 60 * 60 * 24 * 365 // 365 days
               }
             }
           },
@@ -104,7 +100,18 @@ export default defineConfig({
               cacheName: 'pexels-images-cache',
               expiration: {
                 maxEntries: 50,
-                maxAgeSeconds: 60 * 60 * 24 * 30 // <== 30 days
+                maxAgeSeconds: 60 * 60 * 24 * 30 // 30 days
+              }
+            }
+          },
+          {
+            urlPattern: /^https:\/\/.*\.supabase\.co\/.*/i,
+            handler: 'NetworkFirst',
+            options: {
+              cacheName: 'supabase-api-cache',
+              expiration: {
+                maxEntries: 50,
+                maxAgeSeconds: 60 * 60 * 24 // 1 day
               }
             }
           }
@@ -115,4 +122,15 @@ export default defineConfig({
       }
     })
   ],
-})
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          'html2pdf': ['html2pdf.js'],
+          'lucide-react': ['lucide-react'],
+          'supabase': ['@supabase/supabase-js']
+        }
+      }
+    }
+  }
+});
