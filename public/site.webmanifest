@@ -1,0 +1,22 @@
+{
+  "name": "MuseAI - Your Personal Creative Writing Coach",
+  "short_name": "MuseAI",
+  "description": "Write smarter, write better, write with AI. MuseAI helps you start, improve, and polish your stories, poems, and essays.",
+  "icons": [
+    {
+      "src": "/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "theme_color": "#7c3aed",
+  "background_color": "#ffffff",
+  "display": "standalone",
+  "start_url": "/",
+  "scope": "/"
+}
